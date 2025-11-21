@@ -83,9 +83,6 @@ jobs:
           # Update TypeScript package.json (already done, but ensure consistency)
           jq ".version = \"$VERSION\"" typescript/package.json > tmp.json && mv tmp.json typescript/package.json
           
-          # Update MCP package.json
-          jq ".version = \"$VERSION\"" modelcontextprotocol/package.json > tmp.json && mv tmp.json modelcontextprotocol/package.json
-          
           # Update Python version using direct file manipulation
           if [ -f python/pyproject.toml ]; then
             # Update version in pyproject.toml
@@ -105,7 +102,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add typescript/package.json modelcontextprotocol/package.json python/pyproject.toml
+          git add typescript/package.json  python/pyproject.toml
           git commit -m "chore: version bump to v${{ steps.bump_npm.outputs.version }} [skip ci]" || echo "No changes to commit"
           git tag v${{ steps.bump_npm.outputs.version }}
           git push origin main --tags
@@ -115,17 +112,6 @@ jobs:
       # ---- Build & Publish npm (TypeScript) ----
       - name: Build and publish npm (TypeScript)
         working-directory: ./typescript
-        run: |
-          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
-          npm install
-          npm run build
-          npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      # ---- Build & Publish npm (MCP) ----
-      - name: Build and publish npm (MCP)
-        working-directory: ./modelcontextprotocol
         run: |
           echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
           npm install
