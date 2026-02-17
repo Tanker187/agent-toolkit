@@ -1,3 +1,5 @@
+[![Deploy static content to Pages](https://github.com/Tanker187/agent-toolkit/actions/workflows/static.yml/badge.svg?branch=main)](https://github.com/Tanker187/agent-toolkit/actions/workflows/static.yml)
+
 # PayPal Agent Toolkit
 
 A comprehensive, multi-language toolkit that enables popular agent frameworks to integrate with PayPal APIs through function calling. Includes support for **Python** and **TypeScript**, built on top of PayPal APIs and PayPal SDKs.
